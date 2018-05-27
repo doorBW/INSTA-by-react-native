@@ -5,7 +5,7 @@ import {
     StyleSheet,
     ScrollView
     } from 'react-native';
-import { Icon, Container, Content, Thumbnail } from 'native-base';
+import { Icon, Container, Content, Thumbnail, Header, Left, Right, Body } from 'native-base';
 
 import CardComponent from '../CardComponent';
 
@@ -20,6 +20,11 @@ class HomeTab extends Component{
     render(){
         return (
             <Container style = {style.container}>
+                <Header>
+                    <Left><Icon name='ios-camera-outline' style={{paddingLeft:10}}/></Left>
+                    <Body><Text style={{fontWeight:'900'}}>Instagram</Text></Body>
+                    <Right><Icon name='ios-send-outline' style={{paddingRight:10}}/></Right>
+                </Header>
                 <Content>
                     <View style={{height:100}}>
                         <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'center', paddingHorizontal:7}}>
