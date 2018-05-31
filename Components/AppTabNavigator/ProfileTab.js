@@ -3,16 +3,79 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    Dimensions
     } from 'react-native';
 import { Icon, Container, Content, Header, Left, Body, Right, Button } from 'native-base';
+import CardCompnent from '../CardComponent';
+
+var images=[
+    require('../../assets/1.jpg'),
+    require('../../assets/2.jpg'),
+    require('../../assets/3.jpg'),
+    require('../../assets/4.jpg'),
+    require('../../assets/5.jpg'),
+    require('../../assets/6.jpeg'),
+    require('../../assets/7.jpg'),
+    require('../../assets/beomwoo.jpeg'),
+    require('../../assets/deep_learning.png'),
+    require('../../assets/python.jpg')
+]
+
+var {width,height} = Dimensions.get('window')
 class ProfileTab extends Component{
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
             < Icon name='person' style={{color:tintColor}} />
         )
     }
+    constructor(props){
+        super(props)
 
+        this.state = {
+            activeIndex: 0
+        };
+    }
+
+    segmentClicked=(index)=>{
+        this.setState({
+            activeIndex: index
+        })
+    }
+
+    renderSectionOne = () => {
+        return images.map((image,index) => {
+            return (
+                <View key={index} style={[{width:(width)/3}, {height:(width)/3}, index % 3 !== 0 ? {paddingLeft:2}:{paddingLeft:0},{marginBottom:2}]}>
+                    <Image style={{flex:1, width:undefined, height:undefined}}
+                    source = {image}
+                    />
+                </View>
+            )
+        })
+    }
+
+    renderSection = () =>{
+        if (this.state.activeIndex == 0){
+            return(
+                <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+                    {this.renderSectionOne()}
+                </View>
+            )
+        }
+        else if(this.state.activeIndex == 1){
+            return(
+                <View>
+                <CardCompnent imageSource='1' likes='100'/>
+                <CardCompnent imageSource='2' likes='36'/>
+                <CardCompnent imageSource='3' likes='240'/>
+                </View>
+            )
+        }
+    }
+
+    
+    
     render(){
         return (
             <Container style={{flex:1, backgroundColor:'white'}}>
@@ -61,6 +124,27 @@ class ProfileTab extends Component{
                             <Text style={{fontWeight:'bold'}}>범우[25:?]</Text>
                             <Text> React-Native로</Text>
                             <Text> Instagram UI 따라하기!!!</Text>
+                        </View>
+                    </View>
+
+                    {/* 하단 */}
+                    <View>
+                        <View style={{flexDirection:'row', justifyContent:'space-around', borderTopWidth:1,borderTopColor:'#eae5e5'}}>
+                            <Button transparent onPress={()=>this.segmentClicked(0)} active={this.state.activeIndex == 0}>
+                                <Icon name='ios-apps-outline' style={[this.state.activeIndex == 0 ? {} : {color:'grey'}]}/>
+                            </Button>
+                            <Button transparent onPress={()=>this.segmentClicked(1)} active={this.state.activeIndex == 1}>
+                                <Icon name='ios-list-outline' style={[this.state.activeIndex == 1 ? {} : {color:'grey'}]}/>
+                            </Button>
+                            <Button transparent onPress={()=>this.segmentClicked(2)} active={this.state.activeIndex == 2}>
+                                <Icon name='ios-people-outline' style={[this.state.activeIndex == 2 ? {} : {color:'grey'}]}/>
+                            </Button>
+                            <Button transparent onPress={()=>this.segmentClicked(3)} active={this.state.activeIndex == 3}>
+                                <Icon name='ios-bookmark-outline' style={[this.state.activeIndex == 3 ? {} : {color:'grey'}]}/>
+                            </Button>
+                        </View>
+                        <View>
+                            {this.renderSection()}
                         </View>
                     </View>
                 </Content>
